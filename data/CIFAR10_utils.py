@@ -11,3 +11,6 @@ def get_CIFAR10_dataset():
     trainset = torchvision.datasets.CIFAR10(root='./', train=True, download=True, transform=transform)
     testset =  torchvision.datasets.CIFAR10(root='./', train=False, download=True, transform=transform)
     return trainset, testset
+
+def get_classes():
+    return ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
