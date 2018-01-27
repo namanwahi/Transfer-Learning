@@ -5,6 +5,7 @@ import torch.nn as nn
 
 """
 model = models.alexnet(pretrained=False, num_classes=6)
+
 """
 model_ft = models.resnet18(pretrained=True)
 for param in model_ft.parameters():
@@ -13,5 +14,4 @@ for param in model_ft.parameters():
 num_ftrs = model_ft.fc.in_features
 model_ft.fc = nn.Linear(num_ftrs, 10)
 
-train_model(model_ft, model_ft.fc, get_dataloader())
-
+train_model(model_ft, get_dataloader(), model_ft.fc.parameters())
