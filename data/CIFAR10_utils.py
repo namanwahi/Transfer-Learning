@@ -16,9 +16,12 @@ def _get_dataset():
 def _get_classes():
     return ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
-def get_training_dataloader():
+def get_dataloader(train=True):
     animal_indices = [2, 3, 4, 5, 6, 7]
-    animal_sampler = SubsetRandomSamples(animal_indices)
-    return DataLoader(_get_dataset()[0], batch_size=256, sampler=animal_sampler)
-
+    animal_sampler = SubsetRandomSampler(animal_indices)
+    if train:
+        return DataLoader(_get_dataset()[0], batch_size=256, sampler=animal_sampler)
+    else:
+        return DataLoader(_get_dataset()[1], batch_size=256, sampler=animal_sampler)
+        
 
