@@ -6,7 +6,8 @@ from torch.utils.data import DataLoader
 
 def _get_dataset():
     transform = transforms.Compose(
-    [transforms.RandomHorizontalFlip(),
+    [transforms.Resize(256),
+     transforms.RandomHorizontalFlip(),
      transforms.ToTensor(),
      transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
     trainset = torchvision.datasets.CIFAR10(root='./', train=True, download=True, transform=transform)
@@ -18,10 +19,10 @@ def _get_classes():
 
 def get_dataloader(train=True):
     animal_indices = [2, 3, 4, 5, 6, 7]
-    animal_sampler = SubsetRandomSampler(animal_indices)
+    #animal_sampler = SubsetRandomSampler(animal_indices)
     if train:
-        return DataLoader(_get_dataset()[0], batch_size=256, sampler=animal_sampler)
+        return DataLoader(_get_dataset()[0], batch_size=256)
     else:
-        return DataLoader(_get_dataset()[1], batch_size=256, sampler=animal_sampler)
+        return DataLoader(_get_dataset()[1], batch_size=256)
         
 
