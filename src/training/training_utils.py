@@ -2,12 +2,14 @@ from torch.nn import CrossEntropyLoss
 from torch.optim import Adam
 from torch.autograd import Variable
 
-def train_model(model,dataloader, op_params=None, loss_fn=CrossEntropyLoss, epochs=12, initial_learning_rate =1e-2):
+def train_model(model,dataloader, op_params=None, optimizer=Adam, loss_fn=CrossEntropyLoss, epochs=1, initial_learning_rate =1e-2):
     if (op_params == None):
-        optimizer = Adam(model.parameters(), lr=initial_learning_rate)
+        optimizer = optimizer(model.parameters(), lr=initial_learning_rate)
     else:
-        optimizer = Adam(op_params, lr=initial_learning_rate)
+        optimizer = optimizer(op_params, lr=initial_learning_rate)
 
+    loss_fn = loss_fn()
+    
     current_loss = 0
     for i in range(epochs):
         for x_b, y_b in dataloader:
@@ -21,7 +23,7 @@ def train_model(model,dataloader, op_params=None, loss_fn=CrossEntropyLoss, epoc
             loss.backward()
             optimizer.step()
             current_loss = loss.data[0]
-            print(current_loss)
+            print('*' * 10)
+            print("Error for batch:" + str(current_loss))
 
-    
-    
+    torch.save(model.state_dict(), '.')
