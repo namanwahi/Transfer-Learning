@@ -8,9 +8,11 @@ import os
 path = os.path.abspath(__file__)
 dir_path = os.path.dirname(path)
 
-def _get_dataset():
+resnet_18_default = 224
+
+def _get_dataset(resize=resnet_18_default):
     transform = transforms.Compose(
-    [transforms.Resize(224),
+    [transforms.Resize(resize),
      transforms.RandomHorizontalFlip(),
      transforms.ToTensor(),
      transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
