@@ -23,7 +23,7 @@ def _get_dataset(resize=resnet_18_default):
 def _get_classes():
     return ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
-def get_dataloader(train=True, batch_size=4):
+def get_dataloader(train=True, batch_size=16):
     animal_indices = [2, 3, 4, 5, 6, 7]
     #animal_sampler = SubsetRandomSampler(animal_indices)
     if train:
