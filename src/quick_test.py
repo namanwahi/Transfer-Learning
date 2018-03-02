@@ -14,4 +14,5 @@ for param in model_ft.parameters():
 num_ftrs = model_ft.fc.in_features
 model_ft.fc = nn.Linear(num_ftrs, 10)
 
-train_model(model_ft, get_dataloader(), model_ft.fc.parameters())
+train_model(model_ft, get_dataloader(), model_ft.fc.parameters(),
+            epochs=0)

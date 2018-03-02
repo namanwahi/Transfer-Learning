@@ -1,3 +1,4 @@
+import torch
 from torch.nn import CrossEntropyLoss
 from torch.optim import Adam
 from torch.autograd import Variable
@@ -26,4 +27,4 @@ def train_model(model,dataloader, op_params=None, optimizer=Adam, loss_fn=CrossE
             print('*' * 10)
             print("Error for batch:" + str(current_loss))
 
-    torch.save(model.state_dict(), '.')
+    torch.save(model.state_dict(), 'model.pt')
