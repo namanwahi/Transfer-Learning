@@ -8,11 +8,13 @@ model = models.alexnet(pretrained=False, num_classes=6)
 
 """
 model_ft = models.resnet18(pretrained=True)
+
 for param in model_ft.parameters():
     param.requires_grad = False
 
 num_ftrs = model_ft.fc.in_features
 model_ft.fc = nn.Linear(num_ftrs, 10)
 
-train_model(model_ft, get_dataloader(), model_ft.fc.parameters(),
-            epochs=0)
+train_model(model_ft, get_dataloader(batch_size=256),
+            model_ft.fc.parameters(), epochs=100, serialize=True,
+            file_path="resnet.pt")

@@ -2,8 +2,11 @@ import torch
 from torch.nn import CrossEntropyLoss
 from torch.optim import Adam
 from torch.autograd import Variable
+import os
 
-def train_model(model,dataloader, op_params=None, optimizer=Adam, loss_fn=CrossEntropyLoss, epochs=1, initial_learning_rate =1e-2):
+def train_model(model,dataloader, op_params=None, optimizer=Adam,
+                loss_fn=CrossEntropyLoss, epochs=1, initial_learning_rate=1e-2,
+                serialize=False, file_path=None, verbose=True):
     if (op_params == None):
         optimizer = optimizer(model.parameters(), lr=initial_learning_rate)
     else:
@@ -24,7 +27,18 @@ def train_model(model,dataloader, op_params=None, optimizer=Adam, loss_fn=CrossE
             loss.backward()
             optimizer.step()
             current_loss = loss.data[0]
-            print('*' * 10)
-            print("Error for batch:" + str(current_loss))
+            if verbose:
+                print('*' * 50)
+                print("Error for batch in epoch " + str(i) +  ": " + str(current_loss))
 
-    torch.save(model.state_dict(), 'model.pt')
+            if serialize:
+                save_model(model, "~"+file_path)
+                
+    save_model(model, file_path)
+
+    # delete backup
+    os.remove("~"+file_path)
+    
+
+def save_model(model, path):
+    torch.save(model.state_dict(), path)
